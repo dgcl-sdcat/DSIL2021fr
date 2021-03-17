@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Rgions_1.js"></script>
+        <script src="data/AutresbnficiairesAutresprojets_2.js"></script>
+        <script src="data/AutresbnficiairesPrservationpatrimoine_3.js"></script>
+        <script src="data/AutresbnficiairesTransitioncologique_4.js"></script>
+        <script src="data/AutresbnficiairesRsiliencesanitaire_5.js"></script>
+        <script src="data/EPCIAutresprojets_6.js"></script>
+        <script src="data/EPCIPrservationpatrimoine_7.js"></script>
+        <script src="data/EPCITransitioncologique_8.js"></script>
+        <script src="data/EPCIRsiliencesanitaire_9.js"></script>
+        <script src="data/CommunesAutresprojets_10.js"></script>
+        <script src="data/CommunesPrservationpatrimoine_11.js"></script>
+        <script src="data/CommunesTransitioncologique_12.js"></script>
+        <script src="data/CommunesRsiliencesanitaire_13.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_FonddecarteOSM_0');
+        map.getPane('pane_FonddecarteOSM_0').style.zIndex = 400;
+        var layer_FonddecarteOSM_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_FonddecarteOSM_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_FonddecarteOSM_0;
+        map.addLayer(layer_FonddecarteOSM_0);
+        function pop_Rgions_1(feature, layer) {
+        }
+
+        function style_Rgions_1_0() {
+            return {
+                pane: 'pane_Rgions_1',
+                opacity: 1,
+                color: 'rgba(145,92,159,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Rgions_1');
+        map.getPane('pane_Rgions_1').style.zIndex = 401;
+        map.getPane('pane_Rgions_1').style['mix-blend-mode'] = 'normal';
+        var layer_Rgions_1 = new L.geoJson(json_Rgions_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Rgions_1',
+            layerName: 'layer_Rgions_1',
+            pane: 'pane_Rgions_1',
+            onEachFeature: pop_Rgions_1,
+            style: style_Rgions_1_0,
+        });
+        bounds_group.addLayer(layer_Rgions_1);
+        map.addLayer(layer_Rgions_1);
+        function pop_AutresbnficiairesAutresprojets_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Entité</th>\
+                        <td>' + (feature.properties['Entité'] !== null ? autolinker.link(feature.properties['Entité'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AutresbnficiairesAutresprojets_2_0() {
+            return {
+                pane: 'pane_AutresbnficiairesAutresprojets_2',
+                shape: 'triangle',
+                radius: 3.599999999999997,
+                opacity: 1,
+                color: 'rgba(255,255,171,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,105,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AutresbnficiairesAutresprojets_2');
+        map.getPane('pane_AutresbnficiairesAutresprojets_2').style.zIndex = 402;
+        map.getPane('pane_AutresbnficiairesAutresprojets_2').style['mix-blend-mode'] = 'normal';
+        var layer_AutresbnficiairesAutresprojets_2 = new L.geoJson(json_AutresbnficiairesAutresprojets_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AutresbnficiairesAutresprojets_2',
+            layerName: 'layer_AutresbnficiairesAutresprojets_2',
+            pane: 'pane_AutresbnficiairesAutresprojets_2',
+            onEachFeature: pop_AutresbnficiairesAutresprojets_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_AutresbnficiairesAutresprojets_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_AutresbnficiairesAutresprojets_2);
+        map.addLayer(layer_AutresbnficiairesAutresprojets_2);
+        function pop_AutresbnficiairesPrservationpatrimoine_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Entité</th>\
+                        <td>' + (feature.properties['Entité'] !== null ? autolinker.link(feature.properties['Entité'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AutresbnficiairesPrservationpatrimoine_3_0() {
+            return {
+                pane: 'pane_AutresbnficiairesPrservationpatrimoine_3',
+                shape: 'triangle',
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(255,231,186,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,200,98,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AutresbnficiairesPrservationpatrimoine_3');
+        map.getPane('pane_AutresbnficiairesPrservationpatrimoine_3').style.zIndex = 403;
+        map.getPane('pane_AutresbnficiairesPrservationpatrimoine_3').style['mix-blend-mode'] = 'normal';
+        var layer_AutresbnficiairesPrservationpatrimoine_3 = new L.geoJson(json_AutresbnficiairesPrservationpatrimoine_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AutresbnficiairesPrservationpatrimoine_3',
+            layerName: 'layer_AutresbnficiairesPrservationpatrimoine_3',
+            pane: 'pane_AutresbnficiairesPrservationpatrimoine_3',
+            onEachFeature: pop_AutresbnficiairesPrservationpatrimoine_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_AutresbnficiairesPrservationpatrimoine_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_AutresbnficiairesPrservationpatrimoine_3);
+        map.addLayer(layer_AutresbnficiairesPrservationpatrimoine_3);
+        function pop_AutresbnficiairesTransitioncologique_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Entité</th>\
+                        <td>' + (feature.properties['Entité'] !== null ? autolinker.link(feature.properties['Entité'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AutresbnficiairesTransitioncologique_4_0() {
+            return {
+                pane: 'pane_AutresbnficiairesTransitioncologique_4',
+                shape: 'triangle',
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(177,255,167,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,212,84,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AutresbnficiairesTransitioncologique_4');
+        map.getPane('pane_AutresbnficiairesTransitioncologique_4').style.zIndex = 404;
+        map.getPane('pane_AutresbnficiairesTransitioncologique_4').style['mix-blend-mode'] = 'normal';
+        var layer_AutresbnficiairesTransitioncologique_4 = new L.geoJson(json_AutresbnficiairesTransitioncologique_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AutresbnficiairesTransitioncologique_4',
+            layerName: 'layer_AutresbnficiairesTransitioncologique_4',
+            pane: 'pane_AutresbnficiairesTransitioncologique_4',
+            onEachFeature: pop_AutresbnficiairesTransitioncologique_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_AutresbnficiairesTransitioncologique_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_AutresbnficiairesTransitioncologique_4);
+        map.addLayer(layer_AutresbnficiairesTransitioncologique_4);
+        function pop_AutresbnficiairesRsiliencesanitaire_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Entité</th>\
+                        <td>' + (feature.properties['Entité'] !== null ? autolinker.link(feature.properties['Entité'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AutresbnficiairesRsiliencesanitaire_5_0() {
+            return {
+                pane: 'pane_AutresbnficiairesRsiliencesanitaire_5',
+                shape: 'triangle',
+                radius: 2.799999999999997,
+                opacity: 1,
+                color: 'rgba(181,242,244,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,204,207,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AutresbnficiairesRsiliencesanitaire_5');
+        map.getPane('pane_AutresbnficiairesRsiliencesanitaire_5').style.zIndex = 405;
+        map.getPane('pane_AutresbnficiairesRsiliencesanitaire_5').style['mix-blend-mode'] = 'normal';
+        var layer_AutresbnficiairesRsiliencesanitaire_5 = new L.geoJson(json_AutresbnficiairesRsiliencesanitaire_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AutresbnficiairesRsiliencesanitaire_5',
+            layerName: 'layer_AutresbnficiairesRsiliencesanitaire_5',
+            pane: 'pane_AutresbnficiairesRsiliencesanitaire_5',
+            onEachFeature: pop_AutresbnficiairesRsiliencesanitaire_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_AutresbnficiairesRsiliencesanitaire_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_AutresbnficiairesRsiliencesanitaire_5);
+        map.addLayer(layer_AutresbnficiairesRsiliencesanitaire_5);
+        function pop_EPCIAutresprojets_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">EPCI</th>\
+                        <td>' + (feature.properties['EPCI'] !== null ? autolinker.link(feature.properties['EPCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_EPCIAutresprojets_6_0() {
+            return {
+                pane: 'pane_EPCIAutresprojets_6',
+                shape: 'diamond',
+                radius: 3.599999999999997,
+                opacity: 1,
+                color: 'rgba(255,255,171,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,105,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_EPCIAutresprojets_6');
+        map.getPane('pane_EPCIAutresprojets_6').style.zIndex = 406;
+        map.getPane('pane_EPCIAutresprojets_6').style['mix-blend-mode'] = 'normal';
+        var layer_EPCIAutresprojets_6 = new L.geoJson(json_EPCIAutresprojets_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EPCIAutresprojets_6',
+            layerName: 'layer_EPCIAutresprojets_6',
+            pane: 'pane_EPCIAutresprojets_6',
+            onEachFeature: pop_EPCIAutresprojets_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_EPCIAutresprojets_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_EPCIAutresprojets_6);
+        map.addLayer(layer_EPCIAutresprojets_6);
+        function pop_EPCIPrservationpatrimoine_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">EPCI</th>\
+                        <td>' + (feature.properties['EPCI'] !== null ? autolinker.link(feature.properties['EPCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_EPCIPrservationpatrimoine_7_0() {
+            return {
+                pane: 'pane_EPCIPrservationpatrimoine_7',
+                shape: 'diamond',
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(255,231,186,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,200,98,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_EPCIPrservationpatrimoine_7');
+        map.getPane('pane_EPCIPrservationpatrimoine_7').style.zIndex = 407;
+        map.getPane('pane_EPCIPrservationpatrimoine_7').style['mix-blend-mode'] = 'normal';
+        var layer_EPCIPrservationpatrimoine_7 = new L.geoJson(json_EPCIPrservationpatrimoine_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EPCIPrservationpatrimoine_7',
+            layerName: 'layer_EPCIPrservationpatrimoine_7',
+            pane: 'pane_EPCIPrservationpatrimoine_7',
+            onEachFeature: pop_EPCIPrservationpatrimoine_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_EPCIPrservationpatrimoine_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_EPCIPrservationpatrimoine_7);
+        map.addLayer(layer_EPCIPrservationpatrimoine_7);
+        function pop_EPCITransitioncologique_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">EPCI</th>\
+                        <td>' + (feature.properties['EPCI'] !== null ? autolinker.link(feature.properties['EPCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_EPCITransitioncologique_8_0() {
+            return {
+                pane: 'pane_EPCITransitioncologique_8',
+                shape: 'diamond',
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(177,255,167,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,212,84,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_EPCITransitioncologique_8');
+        map.getPane('pane_EPCITransitioncologique_8').style.zIndex = 408;
+        map.getPane('pane_EPCITransitioncologique_8').style['mix-blend-mode'] = 'normal';
+        var layer_EPCITransitioncologique_8 = new L.geoJson(json_EPCITransitioncologique_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EPCITransitioncologique_8',
+            layerName: 'layer_EPCITransitioncologique_8',
+            pane: 'pane_EPCITransitioncologique_8',
+            onEachFeature: pop_EPCITransitioncologique_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_EPCITransitioncologique_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_EPCITransitioncologique_8);
+        map.addLayer(layer_EPCITransitioncologique_8);
+        function pop_EPCIRsiliencesanitaire_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">EPCI</th>\
+                        <td>' + (feature.properties['EPCI'] !== null ? autolinker.link(feature.properties['EPCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_EPCIRsiliencesanitaire_9_0() {
+            return {
+                pane: 'pane_EPCIRsiliencesanitaire_9',
+                shape: 'diamond',
+                radius: 3.9999999999999996,
+                opacity: 1,
+                color: 'rgba(181,242,244,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,204,207,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_EPCIRsiliencesanitaire_9');
+        map.getPane('pane_EPCIRsiliencesanitaire_9').style.zIndex = 409;
+        map.getPane('pane_EPCIRsiliencesanitaire_9').style['mix-blend-mode'] = 'normal';
+        var layer_EPCIRsiliencesanitaire_9 = new L.geoJson(json_EPCIRsiliencesanitaire_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EPCIRsiliencesanitaire_9',
+            layerName: 'layer_EPCIRsiliencesanitaire_9',
+            pane: 'pane_EPCIRsiliencesanitaire_9',
+            onEachFeature: pop_EPCIRsiliencesanitaire_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_EPCIRsiliencesanitaire_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_EPCIRsiliencesanitaire_9);
+        map.addLayer(layer_EPCIRsiliencesanitaire_9);
+        function pop_CommunesAutresprojets_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Commune</th>\
+                        <td>' + (feature.properties['Commune'] !== null ? autolinker.link(feature.properties['Commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CommunesAutresprojets_10_0() {
+            return {
+                pane: 'pane_CommunesAutresprojets_10',
+                radius: 3.599999999999997,
+                opacity: 1,
+                color: 'rgba(255,255,171,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,105,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CommunesAutresprojets_10');
+        map.getPane('pane_CommunesAutresprojets_10').style.zIndex = 410;
+        map.getPane('pane_CommunesAutresprojets_10').style['mix-blend-mode'] = 'normal';
+        var layer_CommunesAutresprojets_10 = new L.geoJson(json_CommunesAutresprojets_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CommunesAutresprojets_10',
+            layerName: 'layer_CommunesAutresprojets_10',
+            pane: 'pane_CommunesAutresprojets_10',
+            onEachFeature: pop_CommunesAutresprojets_10,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CommunesAutresprojets_10_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CommunesAutresprojets_10);
+        map.addLayer(layer_CommunesAutresprojets_10);
+        function pop_CommunesPrservationpatrimoine_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Commune</th>\
+                        <td>' + (feature.properties['Commune'] !== null ? autolinker.link(feature.properties['Commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CommunesPrservationpatrimoine_11_0() {
+            return {
+                pane: 'pane_CommunesPrservationpatrimoine_11',
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(255,231,186,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,200,98,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CommunesPrservationpatrimoine_11');
+        map.getPane('pane_CommunesPrservationpatrimoine_11').style.zIndex = 411;
+        map.getPane('pane_CommunesPrservationpatrimoine_11').style['mix-blend-mode'] = 'normal';
+        var layer_CommunesPrservationpatrimoine_11 = new L.geoJson(json_CommunesPrservationpatrimoine_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CommunesPrservationpatrimoine_11',
+            layerName: 'layer_CommunesPrservationpatrimoine_11',
+            pane: 'pane_CommunesPrservationpatrimoine_11',
+            onEachFeature: pop_CommunesPrservationpatrimoine_11,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CommunesPrservationpatrimoine_11_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CommunesPrservationpatrimoine_11);
+        map.addLayer(layer_CommunesPrservationpatrimoine_11);
+        function pop_CommunesTransitioncologique_12(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Commune</th>\
+                        <td>' + (feature.properties['Commune'] !== null ? autolinker.link(feature.properties['Commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CommunesTransitioncologique_12_0() {
+            return {
+                pane: 'pane_CommunesTransitioncologique_12',
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(177,255,167,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,212,84,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CommunesTransitioncologique_12');
+        map.getPane('pane_CommunesTransitioncologique_12').style.zIndex = 412;
+        map.getPane('pane_CommunesTransitioncologique_12').style['mix-blend-mode'] = 'normal';
+        var layer_CommunesTransitioncologique_12 = new L.geoJson(json_CommunesTransitioncologique_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CommunesTransitioncologique_12',
+            layerName: 'layer_CommunesTransitioncologique_12',
+            pane: 'pane_CommunesTransitioncologique_12',
+            onEachFeature: pop_CommunesTransitioncologique_12,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CommunesTransitioncologique_12_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CommunesTransitioncologique_12);
+        map.addLayer(layer_CommunesTransitioncologique_12);
+        function pop_CommunesRsiliencesanitaire_13(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Commune</th>\
+                        <td>' + (feature.properties['Commune'] !== null ? autolinker.link(feature.properties['Commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Thème</th>\
+                        <td>' + (feature.properties['Thème'] !== null ? autolinker.link(feature.properties['Thème'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Projet</th>\
+                        <td>' + (feature.properties['Projet'] !== null ? autolinker.link(feature.properties['Projet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Coût</th>\
+                        <td>' + (feature.properties['Coût'] !== null ? autolinker.link(feature.properties['Coût'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Subvention</th>\
+                        <td>' + (feature.properties['Subvention'] !== null ? autolinker.link(feature.properties['Subvention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Part</th>\
+                        <td>' + (feature.properties['Part'] !== null ? autolinker.link(feature.properties['Part'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CommunesRsiliencesanitaire_13_0() {
+            return {
+                pane: 'pane_CommunesRsiliencesanitaire_13',
+                radius: 2.799999999999997,
+                opacity: 1,
+                color: 'rgba(181,242,244,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,204,207,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CommunesRsiliencesanitaire_13');
+        map.getPane('pane_CommunesRsiliencesanitaire_13').style.zIndex = 413;
+        map.getPane('pane_CommunesRsiliencesanitaire_13').style['mix-blend-mode'] = 'normal';
+        var layer_CommunesRsiliencesanitaire_13 = new L.geoJson(json_CommunesRsiliencesanitaire_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CommunesRsiliencesanitaire_13',
+            layerName: 'layer_CommunesRsiliencesanitaire_13',
+            pane: 'pane_CommunesRsiliencesanitaire_13',
+            onEachFeature: pop_CommunesRsiliencesanitaire_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CommunesRsiliencesanitaire_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CommunesRsiliencesanitaire_13);
+        map.addLayer(layer_CommunesRsiliencesanitaire_13);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/CommunesRsiliencesanitaire_13.png" /> Communes - Résilience sanitaire': layer_CommunesRsiliencesanitaire_13,'<img src="legend/CommunesTransitioncologique_12.png" /> Communes - Transition écologique': layer_CommunesTransitioncologique_12,'<img src="legend/CommunesPrservationpatrimoine_11.png" /> Communes - Préservation patrimoine': layer_CommunesPrservationpatrimoine_11,'<img src="legend/CommunesAutresprojets_10.png" /> Communes - Autres projets': layer_CommunesAutresprojets_10,'<img src="legend/EPCIRsiliencesanitaire_9.png" /> EPCI - Résilience sanitaire': layer_EPCIRsiliencesanitaire_9,'<img src="legend/EPCITransitioncologique_8.png" /> EPCI - Transition écologique': layer_EPCITransitioncologique_8,'<img src="legend/EPCIPrservationpatrimoine_7.png" /> EPCI - Préservation patrimoine': layer_EPCIPrservationpatrimoine_7,'<img src="legend/EPCIAutresprojets_6.png" /> EPCI - Autres projets': layer_EPCIAutresprojets_6,'<img src="legend/AutresbnficiairesRsiliencesanitaire_5.png" /> Autres bénéficiaires - Résilience sanitaire': layer_AutresbnficiairesRsiliencesanitaire_5,'<img src="legend/AutresbnficiairesTransitioncologique_4.png" /> Autres bénéficiaires - Transition écologique': layer_AutresbnficiairesTransitioncologique_4,'<img src="legend/AutresbnficiairesPrservationpatrimoine_3.png" /> Autres bénéficiaires - Préservation patrimoine': layer_AutresbnficiairesPrservationpatrimoine_3,'<img src="legend/AutresbnficiairesAutresprojets_2.png" /> Autres bénéficiaires - Autres projets': layer_AutresbnficiairesAutresprojets_2,'<img src="legend/Rgions_1.png" /> Régions ': layer_Rgions_1,"Fond de carte OSM": layer_FonddecarteOSM_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
